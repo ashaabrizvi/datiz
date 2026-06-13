@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DATIZ — Become 1% Better at Data Every Day</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1C1C1C;
+      --bg-card: #242424;
+      --bg-elevated: #2A2A2A;
+      --text: #F5F2EE;
+      --muted: #8A8480;
+      --accent: #E8E0D5;
+      --gold: #C9A96E;
+      --border: #333333;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(28,28,28,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .nav-cta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--gold);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* HERO */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 48px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* STREAK DEMO — the signature element */
+    .streak-demo {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 52px;
+      flex-wrap: wrap;
+    }
+
+    .streak-day {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: var(--muted);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+    .streak-day.done {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg);
+      font-weight: 500;
+    }
+    .streak-day.today {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 10px rgba(201,169,110,0.25);
+    }
+    .streak-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    /* WAITLIST FORM */
+    .waitlist {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .waitlist input {
+      flex: 1;
+      min-width: 220px;
+      padding: 14px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .waitlist input::placeholder { color: var(--muted); }
+    .waitlist input:focus { border-color: var(--gold); }
+
+    .waitlist button {
+      padding: 14px 24px;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .waitlist button:hover { opacity: 0.85; }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+
+    /* SUCCESS STATE */
+    .success-msg {
+      display: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--gold);
+      margin-top: 16px;
+      letter-spacing: 0.06em;
+    }
+
+    /* SOCIAL PROOF */
+    .social-proof {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 64px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--text);
+      display: block;
+    }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* DIVIDER */
+    .divider {
+      max-width: 860px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* HOW IT WORKS */
+    section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(26px, 4vw, 40px);
+      color: var(--text);
+      margin-bottom: 48px;
+      line-height: 1.2;
+    }
+
+    /* CHALLENGE TYPES */
+    .challenges {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    .challenge-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .challenge-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .challenge-icon {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .challenge-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .challenge-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* SAMPLE QUESTION */
+    .question-preview {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .qp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+
+    .qp-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .qp-difficulty {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .qp-body {
+      padding: 24px 20px;
+    }
+
+    .qp-question {
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .qp-code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      line-height: 1.7;
+      overflow-x: auto;
+    }
+
+    .qp-code .kw { color: #C9A96E; }
+    .qp-code .fn { color: #A8C4E0; }
+    .qp-code .cm { color: #555; }
+
+    .qp-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .qp-option {
+      padding: 12px 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      transition: all 0.15s;
+      text-align: left;
+    }
+    .qp-option:hover {
+      border-color: var(--gold);
+      color: var(--text);
+    }
+    .qp-option.correct {
+      border-color: #6EAF8A;
+      color: #6EAF8A;
+      background: rgba(110,175,138,0.08);
+    }
+
+    /* FEATURES */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .feature {
+      padding: 28px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .feature-icon {
+      font-size: 22px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .feature-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* WHO IT'S FOR */
+    .audience {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .audience-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* FINAL CTA */
+    .cta-section {
+      text-align: center;
+      padding: 80px 24px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cta-section h2 {
+      margin-bottom: 16px;
+    }
+
+    .cta-sub {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+
+    /* FOOTER */
+    footer {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero > * {
+      animation: fadeUp 0.5s ease both;
+    }
+    .hero > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero > *:nth-child(2) { animation-delay: 0.12s; }
+    .hero > *:nth-child(3) { animation-delay: 0.18s; }
+    .hero > *:nth-child(4) { animation-delay: 0.24s; }
+    .hero > *:nth-child(5) { animation-delay: 0.30s; }
+    .hero > *:nth-child(6) { animation-delay: 0.36s; }
+    .hero > *:nth-child(7) { animation-delay: 0.42s; }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 64px 20px 56px; }
+      .qp-options { grid-template-columns: 1fr; }
+      footer { justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="logo">DATIZ</span>
+    <a class="nav-cta" href="#waitlist">Join Waitlist</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">The Duolingo for Data Professionals</div>
+
+    <h1>Become <span>1% Better</span><br>at Data Every Day</h1>
+
+    <p class="hero-sub">
+      Daily SQL, Python, Excel, Analytics and AI challenges — designed for data professionals who want to stay sharp, interview-ready, and ahead of the curve.
+    </p>
+
+    <!-- STREAK VISUAL -->
+    <div class="streak-label">Your streak this month</div>
+    <div class="streak-demo" id="streakDemo"></div>
+
+    <!-- WAITLIST -->
+    <div id="waitlist">
+      <div class="waitlist">
+        <input type="email" id="emailInput" placeholder="your@email.com" />
+        <button onclick="handleWaitlist()">Join Waitlist →</button>
+      </div>
+      <div class="form-note">Free to join. No spam. Ever.</div>
+      <div class="success-msg" id="successMsg">✓ You're on the list. We'll be in touch.</div>
+    </div>
+
+    <!-- STATS -->
+    <div class="social-proof">
+      <div class="stat">
+        <span class="stat-num">5 min</span>
+        <span class="stat-label">Daily commitment</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Challenge tracks</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Career upside</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHALLENGE TYPES -->
+  <section>
+    <div class="section-label">What you practice</div>
+    <h2>One challenge. Four tracks.<br>Every single day.</h2>
+
+    <div class="challenges">
+      <div class="challenge-card">
+        <span class="challenge-icon">SQL_</span>
+        <div class="challenge-name">SQL</div>
+        <div class="challenge-desc">Window functions, CTEs, optimization, real query scenarios.</div>
+      </div>
+      <div class="challenge-card">
+        <span class="challenge-icon">PY_</span>
+        <div class="challenge-name">Python</div>
+        <div class="challenge-desc">Pandas, data wrangling, automation, and analytics scripts.</div>
+      </div>
+      <div class="challenge-card">
+        <span class="challenge-icon">XL_</span>
+        <div class="challenge-name">Excel</div>
+        <div class="challenge-desc">Pivot tables, VLOOKUP, dashboards, and business formulas.</div>
+      </div>
+      <div class="challenge-card">
+        <span class="challenge-icon">BIZ_</span>
+        <div class="challenge-name">Business Case</div>
+        <div class="challenge-desc">Consulting-style scenarios. Structure your thinking like an analyst.</div>
+      </div>
+    </div>
+
+    <!-- SAMPLE QUESTION -->
+    <div class="question-preview">
+      <div class="qp-header">
+        <span class="qp-tag">SQL · Today's Challenge</span>
+        <span class="qp-difficulty">Medium</span>
+      </div>
+      <div class="qp-body">
+        <div class="qp-question">
+          You have a <code style="font-family:'DM Mono',monospace;color:var(--gold);font-size:13px">sales</code> table with columns <code style="font-family:'DM Mono',monospace;color:var(--gold);font-size:13px">user_id</code>, <code style="font-family:'DM Mono',monospace;color:var(--gold);font-size:13px">order_date</code>, and <code style="font-family:'DM Mono',monospace;color:var(--gold);font-size:13px">revenue</code>. Write a query to find the <strong>top 3 users by total revenue in the last 30 days</strong>.
+        </div>
+        <div class="qp-code">
+<span class="kw">SELECT</span> user_id,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="fn">SUM</span>(revenue) <span class="kw">AS</span> total_revenue<br>
+<span class="kw">FROM</span>   sales<br>
+<span class="kw">WHERE</span>  order_date &gt;= <span class="fn">CURRENT_DATE</span> - <span class="kw">INTERVAL</span> <span style="color:#8fbcbb">'30 days'</span><br>
+<span class="kw">GROUP BY</span> user_id<br>
+<span class="kw">ORDER BY</span> total_revenue <span class="kw">DESC</span><br>
+<span class="kw">LIMIT</span>  3;
+        </div>
+        <div class="qp-options">
+          <button class="qp-option" onclick="selectOption(this, false)">A. Use HAVING instead of WHERE</button>
+          <button class="qp-option correct" onclick="selectOption(this, true)">B. This query is correct ✓</button>
+          <button class="qp-option" onclick="selectOption(this, false)">C. Missing a JOIN clause</button>
+          <button class="qp-option" onclick="selectOption(this, false)">D. LIMIT should be FETCH FIRST</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="section-label">Why DATIZ works</div>
+    <h2>Built for how data professionals actually learn.</h2>
+
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">🔥</span>
+        <div class="feature-title">Daily Streaks</div>
+        <div class="feature-desc">Miss a day and your streak breaks. That's the point. Consistency beats cramming every time.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🏆</span>
+        <div class="feature-title">Leaderboard</div>
+        <div class="feature-desc">See how you rank against other data professionals. Real competition drives real learning.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🎯</span>
+        <div class="feature-title">Interview-focused</div>
+        <div class="feature-desc">Every question is designed to mirror what top companies actually ask. Bain, McKinsey, Google-level rigor.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-title">5 minutes daily</div>
+        <div class="feature-desc">Not a course. Not a bootcamp. One sharp challenge a day that fits into your morning routine.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🤖</span>
+        <div class="feature-title">AI Explanations</div>
+        <div class="feature-desc">Wrong answer? Get a plain-English breakdown of exactly why — and how to think about it differently.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📈</span>
+        <div class="feature-title">Progress Tracking</div>
+        <div class="feature-desc">Watch your accuracy improve over time across SQL, Python, Excel, and Business Cases.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHO IT'S FOR -->
+  <section>
+    <div class="section-label">Who it's for</div>
+    <h2>If data is your career,<br>DATIZ is your daily edge.</h2>
+    <div class="audience">
+      <span class="audience-tag">Data Analysts</span>
+      <span class="audience-tag">Data Engineers</span>
+      <span class="audience-tag">BI Developers</span>
+      <span class="audience-tag">Analytics Engineers</span>
+      <span class="audience-tag">CS Students</span>
+      <span class="audience-tag">MBA Aspirants</span>
+      <span class="audience-tag">Consulting Preps</span>
+      <span class="audience-tag">SQL Beginners</span>
+      <span class="audience-tag">Career Switchers</span>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <div class="cta-section">
+    <div class="section-label" style="margin-bottom:16px">Early access</div>
+    <h2 style="margin-bottom:12px">Be first in.<br>Get lifetime benefits.</h2>
+    <p class="cta-sub">Join the waitlist. First 100 users get free premium access at launch.</p>
+    <div class="waitlist" style="justify-content:center">
+      <input type="email" id="emailInput2" placeholder="your@email.com" />
+      <button onclick="handleWaitlist2()">Claim My Spot →</button>
+    </div>
+    <div class="form-note" style="margin-top:12px">No spam. Unsubscribe anytime.</div>
+    <div class="success-msg" id="successMsg2" style="margin-top:12px">✓ You're on the list. We'll be in touch.</div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">DATIZ</span>
+    <span class="footer-note">thedataguy.ai · Built for data professionals</span>
+  </footer>
+
+  <script>
+    // STREAK VISUAL
+    const streak = document.getElementById('streakDemo');
+    const days = ['M','T','W','T','F','S','S'];
+    const doneUntil = 5; // simulate 5 days done
+    for (let i = 0; i < 21; i++) {
+      const d = document.createElement('div');
+      d.className = 'streak-day' + (i < doneUntil ? ' done' : i === doneUntil ? ' today' : '');
+      d.textContent = days[i % 7];
+      streak.appendChild(d);
+    }
+
+    // WAITLIST HANDLERS
+    function handleWaitlist() {
+      const email = document.getElementById('emailInput').value;
+      if (!email || !email.includes('@')) {
+        document.getElementById('emailInput').focus();
+        return;
+      }
+      document.getElementById('successMsg').style.display = 'block';
+      document.getElementById('emailInput').value = '';
+      document.querySelector('.waitlist').style.opacity = '0.4';
+      document.querySelector('.waitlist').style.pointerEvents = 'none';
+    }
+
+    function handleWaitlist2() {
+      const email = document.getElementById('emailInput2').value;
+      if (!email || !email.includes('@')) {
+        document.getElementById('emailInput2').focus();
+        return;
+      }
+      document.getElementById('successMsg2').style.display = 'block';
+      document.getElementById('emailInput2').value = '';
+    }
+
+    // INTERACTIVE QUESTION
+    function selectOption(el, isCorrect) {
+      document.querySelectorAll('.qp-option').forEach(o => {
+        o.style.pointerEvents = 'none';
+        o.style.opacity = '0.5';
+      });
+      el.style.opacity = '1';
+      if (isCorrect) {
+        el.style.borderColor = '#6EAF8A';
+        el.style.color = '#6EAF8A';
+      } else {
+        el.style.borderColor = '#AF6E6E';
+        el.style.color = '#AF6E6E';
+      }
+    }
+  </script>
+
+</body>
+</html>
