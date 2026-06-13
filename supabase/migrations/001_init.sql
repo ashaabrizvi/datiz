@@ -1,7 +1,9 @@
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+-- Drop policies if they exist (safe to re-run)
+DROP POLICY IF EXISTS "Waitlist insert for all" ON public.waitlist;
+DROP POLICY IF EXISTS "Profiles are public" ON public.profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 
--- Waitlist (no auth required)
+-- Waitlist
 CREATE TABLE IF NOT EXISTS public.waitlist (
   id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email      TEXT UNIQUE NOT NULL,
@@ -9,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.waitlist (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- User profiles (extends Supabase auth.users)
+-- Profiles
 CREATE TABLE IF NOT EXISTS public.profiles (
   id           UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   username     TEXT UNIQUE NOT NULL,
@@ -38,7 +40,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
-CREATE OR REPLACE TRIGGER on_auth_user_created
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
