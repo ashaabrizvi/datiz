@@ -1,3 +1,4 @@
+'use client'
 import { TopNav } from '@/components/nav/TopNav'
 import { WaitlistForm } from '@/components/landing/WaitlistForm'
 import { StreakDemo } from '@/components/landing/StreakDemo'
