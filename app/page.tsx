@@ -1,8 +1,10 @@
 'use client'
+import Link from 'next/link'
 import { TopNav } from '@/components/nav/TopNav'
-import { WaitlistForm } from '@/components/landing/WaitlistForm'
 import { StreakDemo } from '@/components/landing/StreakDemo'
 import { ChallengePreview } from '@/components/landing/ChallengePreview'
+import { NewsletterForm } from '@/components/landing/NewsletterForm'
+import { useState } from 'react'
 
 const TRACKS = [
   { tag: 'SQL_', name: 'SQL', desc: 'Window functions, CTEs, optimization, real query scenarios.' },
@@ -12,7 +14,7 @@ const TRACKS = [
 ]
 
 const FEATURES = [
-  { icon: '🔥', title: 'Daily Streaks', desc: 'Miss a day and your streak breaks. That\'s the point. Consistency beats cramming every time.' },
+  { icon: '🔥', title: 'Daily Streaks', desc: "Miss a day and your streak breaks. That's the point. Consistency beats cramming every time." },
   { icon: '🏆', title: 'Leaderboard', desc: 'See how you rank against other data professionals. Real competition drives real learning.' },
   { icon: '🎯', title: 'Interview-focused', desc: 'Every question mirrors what top companies actually ask. Bain, McKinsey, Google-level rigor.' },
   { icon: '⚡', title: '5 minutes daily', desc: 'Not a course. Not a bootcamp. One sharp challenge a day that fits into your morning routine.' },
@@ -48,20 +50,43 @@ export default function LandingPage() {
         </p>
 
         {/* Streak */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 40 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 48 }}>
           <StreakDemo />
         </div>
 
-        {/* Waitlist */}
-        <div id="waitlist" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-          <WaitlistForm source="hero" />
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-text-muted)' }}>
-            Free to join. No spam. Ever.
-          </p>
+        {/* CTA buttons */}
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 16 }}>
+          <Link href="/signup" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: 'var(--color-gold)', color: 'var(--color-bg)',
+            fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500,
+            padding: '14px 28px', borderRadius: 12, textDecoration: 'none',
+            transition: 'opacity 0.2s',
+          }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = '0.85'}
+            onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = '1'}
+          >
+            Start for free →
+          </Link>
+          <Link href="/login" style={{
+            display: 'inline-flex', alignItems: 'center',
+            background: 'transparent', color: 'var(--color-text-muted)',
+            fontFamily: 'var(--font-sans)', fontSize: 14,
+            padding: '14px 28px', borderRadius: 12, textDecoration: 'none',
+            border: '1px solid var(--color-border)', transition: 'border-color 0.2s, color 0.2s',
+          }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-gold)'; (e.currentTarget as HTMLElement).style.color = 'var(--color-text)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-border)'; (e.currentTarget as HTMLElement).style.color = 'var(--color-text-muted)' }}
+          >
+            Sign in
+          </Link>
         </div>
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-text-muted)' }}>
+          Free forever. No credit card required.
+        </p>
 
         {/* Stats */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 32, flexWrap: 'wrap', marginTop: 48 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 32, flexWrap: 'wrap', marginTop: 56 }}>
           {[['5 min', 'Daily commitment'], ['4', 'Challenge tracks'], ['∞', 'Career upside']].map(([num, label]) => (
             <div key={label} style={{ textAlign: 'center' }}>
               <div style={{ fontFamily: 'var(--font-serif)', fontSize: 28, color: 'var(--color-text)' }}>{num}</div>
@@ -80,7 +105,8 @@ export default function LandingPage() {
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
           {TRACKS.map(t => (
-            <div key={t.name} style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-border)', borderRadius: 12, padding: '24px 20px', transition: 'border-color 0.2s, transform 0.2s' }}
+            <div key={t.name}
+              style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-border)', borderRadius: 12, padding: '24px 20px', transition: 'border-color 0.2s, transform 0.2s' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-gold)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-border)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-gold)', marginBottom: 10 }}>{t.tag}</div>
@@ -97,6 +123,15 @@ export default function LandingPage() {
           Try a sample question
         </p>
         <ChallengePreview />
+        <div style={{ textAlign: 'center', marginTop: 24 }}>
+          <Link href="/signup" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-gold)',
+            textDecoration: 'none', letterSpacing: '0.06em',
+          }}>
+            Get daily challenges like this →
+          </Link>
+        </div>
       </section>
 
       <div style={{ maxWidth: 860, margin: '0 auto', height: 1, background: 'var(--color-border)' }} />
@@ -122,33 +157,44 @@ export default function LandingPage() {
         <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(22px, 3.5vw, 34px)', marginBottom: 28 }}>
           If data is your career, DATIZ is your daily edge.
         </h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginBottom: 40 }}>
           {AUDIENCE.map(tag => (
             <span key={tag} style={{ fontFamily: 'var(--font-mono)', fontSize: 12, padding: '8px 16px', borderRadius: 100, border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}>
               {tag}
             </span>
           ))}
         </div>
+        <Link href="/signup" style={{
+          display: 'inline-flex', alignItems: 'center', gap: 8,
+          background: 'var(--color-gold)', color: 'var(--color-bg)',
+          fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500,
+          padding: '14px 28px', borderRadius: 12, textDecoration: 'none',
+        }}>
+          Start your streak today →
+        </Link>
       </section>
 
-      {/* Final CTA */}
+      {/* Newsletter CTA */}
       <section style={{ background: 'var(--color-bg-card)', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', padding: '80px 24px', textAlign: 'center' }}>
-        <div style={{ maxWidth: 540, margin: '0 auto' }}>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--color-text-muted)', marginBottom: 16 }}>Early access</p>
-          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(26px, 4vw, 40px)', marginBottom: 12 }}>Be first in. Get lifetime benefits.</h2>
+        <div style={{ maxWidth: 500, margin: '0 auto' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--color-gold)', marginBottom: 16 }}>Newsletter</p>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 4vw, 36px)', marginBottom: 12 }}>
+            One data tip. Every week.
+          </h2>
           <p style={{ fontSize: 15, color: 'var(--color-text-muted)', marginBottom: 32, lineHeight: 1.6 }}>
-            Join the waitlist. First 100 users get free premium access at launch.
+            SQL tricks, Python patterns, career advice for data folks — straight to your inbox. No noise.
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-            <WaitlistForm source="cta" />
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--color-text-muted)' }}>No spam. Unsubscribe anytime.</p>
-          </div>
+          <NewsletterForm />
         </div>
       </section>
 
       {/* Footer */}
       <footer style={{ maxWidth: 860, margin: '0 auto', padding: '32px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--color-gold)' }}>DATIZ</span>
+        <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+          <Link href="/login" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-text-muted)', textDecoration: 'none' }}>Sign in</Link>
+          <Link href="/signup" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-text-muted)', textDecoration: 'none' }}>Sign up</Link>
+        </div>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--color-text-muted)' }}>thedataguy.ai · Built for data professionals</span>
       </footer>
     </div>
