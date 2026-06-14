@@ -48,7 +48,7 @@ export function TopNav({ isAuth = false }: { isAuth?: boolean }) {
               <NavLink href="/challenge">Challenge</NavLink>
               <NavLink href="/leaderboard">Leaderboard</NavLink>
               <div style={{ width: 1, height: 16, background: 'var(--color-border)', margin: '0 8px' }} />
-              <Button size="sm" variant="outline">Profile</Button>
+              <Link href="/profile"><Button size="sm" variant="outline">Profile</Button></Link>
             </nav>
           ) : (
             <nav className="hidden md:flex items-center gap-2">
