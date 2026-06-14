@@ -54,7 +54,7 @@ export function TopNav({ isAuth = false }: { isAuth?: boolean }) {
             <nav className="hidden md:flex items-center gap-2">
               <NavLink href="/login">Sign in</NavLink>
               <div style={{ width: 1, height: 16, background: 'var(--color-border)', margin: '0 4px' }} />
-              <a href="#waitlist"><Button size="sm">Get early access →</Button></a>
+              <Link href="/signup"><Button size="sm">Start for free →</Button></Link>
             </nav>
           )}
 
@@ -96,9 +96,9 @@ export function TopNav({ isAuth = false }: { isAuth?: boolean }) {
                   <DrawerLink href="/login" onClick={() => setOpen(false)}>Sign in</DrawerLink>
                   <DrawerLink href="/signup" onClick={() => setOpen(false)}>Create account</DrawerLink>
                   <div className="mt-4">
-                    <a href="#waitlist" onClick={() => setOpen(false)}>
-                      <Button className="w-full" size="lg">Get early access →</Button>
-                    </a>
+                    <Link href="/signup" onClick={() => setOpen(false)}>
+                      <Button className="w-full" size="lg">Start for free →</Button>
+                    </Link>
                   </div>
                 </>
               )}
